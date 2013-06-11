@@ -1,0 +1,4 @@
+README File for SerialParser Library
+Created 6/10/13 by Matthew Adams
+Library implements a Finite State Machine Parser for Arduino Serial communications.
+
