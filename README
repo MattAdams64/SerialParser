@@ -1,4 +1,24 @@
 README File for SerialParser Library
-Created 6/10/13 by Matthew Adams
-Library implements a Finite State Machine Parser for Arduino Serial communications.
+
+Finite State Machine Parser Library for Arduino Serial Communications
+
+Created by Matthew Adams, last updated: 6/24/13
+
+Version 01
+
+Methods:
+
+  SerialParser - Class for operating finite state machine parser for Arduino serial communications
+
+	begin(int baud_rate) - initializes Serial port communications, state machine
+
+	run() - runs the state machine (1 state per command)
+
+	check_packet() - returns packet availability status
+
+	get_packet(uint8_t *id_tag, uint8_t *data) - returns oldest stored packet as two arrays (id_tag and data)
+
+	get_state() - returns current state of machine
+
+	get_packetcount() - returns number of stored packets
 
