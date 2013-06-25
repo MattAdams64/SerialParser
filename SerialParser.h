@@ -1,21 +1,45 @@
-/*SerialParser.h - Arduino Serial Parser Library Header File
-Created by Matthew Adams, last updated: 6/10/13
+/*SerialParser.h - Arduino Serial Parser Class Library Header File
+
+Created by Matthew Adams, last updated: 6/24/13
+
+Version 01
+
+Methods:
+
+	SerialParser - Class for operating finite state machine parser for Arduino serial communications
+
+	begin(int baud_rate) - initializes Serial port communications, state machine
+
+	run() - runs the state machine (1 state per command)
+
+	check_packet() - returns packet availability status
+
+	get_packet(uint8_t *id_tag, uint8_t *data) - returns oldest stored packet as two arrays (id_tag and data)
+
+	get_state() - returns current state of machine
+
+	get_packetcount() - returns number of stored packets
+
 */
 
 #ifndef Serial_Parser_h
 #define Serial_Parser_h
 
+#include <stdint.h>
 
-
+// Defines maximum number of stored packets
+#define STORED_PACKETS 5
 
 class SerialParser
 {
 public:
-	SerialParser(int baud_rate);
-	void end();
+	SerialParser();
+	void begin(int baud_rate);
 	void run();
-	void get_data(*uint8_t id_tag, *uint8_t data);
-	bool new_packet();
+	void get_packet(uint8_t *id_tag, uint8_t *data);
+	bool check_packet();
+	uint8_t get_state();
+	uint8_t get_packetcount();
 	
 private:
 	void state_1();
@@ -25,21 +49,15 @@ private:
 	void state_5();
 	void state_6();
 	void state_7();
-	char state;
-	const uint8_t buffer_size;
-	const uint8_t stored_packets;
-	extern uint8_t buffer[buffer_size];
-	extern uint8_t input[buffer_size];
-	extern uint8_t id_tag_stored[stored_packets][2];
+	uint8_t state;
 	bool packet_avail;
-	extern uint8_t data_stored[stored_packets][3];
-	uint8_t buffer_count;
-	uint8_t input_count;
+	uint8_t id_tag_stored[STORED_PACKETS][2];
+	uint8_t data_stored[STORED_PACKETS][3];
 	uint8_t packet_count;
-	uint8_t tag_id1;
-	uint8_t tag_id2;
-	unint8_t databyte1;
-	unint8_t databyte2;
-	unint8_t databyte3;
+	uint8_t id_tag1;
+	uint8_t id_tag2;
+	uint8_t databyte1;
+	uint8_t databyte2;
+	uint8_t databyte3;
 };
 #endif
